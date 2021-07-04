@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{companys.image}}" alt="" class="img-fluid">
+                    <h3>{{companys.company_name}}</h3>
+                </div>
+                <div class="col-md-8">
+                    <h3 class="text-center">{{companys.name}}</h3>
+                    <p>{{companys.description}}</p>
+                    <h5>Founder: {{companys.founder}}</h5>
+                    <h5>Rating: {{average}}/10</h5>
+                    {% if request.user.is_authenticated %}
+                    {% if request.user.is_active %}
+                    <a href="{% url 'reviewapp:editcompany' companys.id %}" class="btn btn-warning">Edit compnay</a>
+                    <a href="{% url 'reviewapp:deletecompany' companys.id %}" class="btn btn-danger">Delete company</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">Add Reviews</h3>
+            <form action="{% url 'reviewapp:addreview' companys.id %}" method="POST">
+                {% csrf_token%}
+                <div class="form-group">
+                    <label for="">Comment</label>
+                    <textarea name="comment" id="" cols="5" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Rating</label>
+                    <input type="range" id="rangeInput" name="rating" min="0" max="10" value="0" step="0.5" oninput="amount.value=rangeInput.value">
+                    <output name="amount" id="amount" for="rangeInput">0</output>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-danger" value="add review">
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">Reviews</h3>
+                {% for i in review %}
+                <div class="card" style="background-color: #f5eeee;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5 class="text-left">{{i.user.username}}</h5>
+                                <h5>{{i.rating}}</h5>
+                                {% if request.user == i.user %}
+                                <a href="{% url 'reviewapp:editreview' companys.id i.id %}" >Edit</a>
+                                <a href="{% url 'reviewapp:deletereview' companys.id i.id %}" onclick="return confirm('Are you sure yo want to delete')">Delete</a>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-9">
+                                <p>{{i.comment}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+        </div>
+    </div>
+    <br>
+
+</div>
+{% endblock %}

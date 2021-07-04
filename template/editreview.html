@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-md-6 mx-auto text-white p-3" style="box-shadow: 0px 10px 10px gray;">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">Comment</label>
+                    <textarea name="comment" id="" cols="5" rows="5" class="form-control">{{review.comment}}</textarea>
+                </div>
+                <div class="from-group">
+                    <label for="">Rating</label>
+                    <input type="text" name="rating" class="form-control" value="{{review.rating}}">
+                </div>
+                <br>
+                <input type="submit" value="update comment" class="btn btn-success">
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% if status %}
+<script>
+    alert("{{status}}")
+</script>
+{% endif %}
+{% endblock %}

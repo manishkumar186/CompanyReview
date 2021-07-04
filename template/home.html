@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <div class="card" id="backdropcolor">
+        <h5 class="text-center">All Software company review & average rating</h5>
+        <div class="card-body">
+            <div class="row">
+                {% for i in company %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img src="{{i.image}}" alt=""class="img-fluid" >
+                                <h3 class="text-center">{{i.company_name}}</h3>
+                                
+                                    <i class="text-center">{{i.date}}</i>
+                                    <a href="{% url 'reviewapp:detail' i.id %}">Read More</a>
+                                    
+                            </div>
+                     
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

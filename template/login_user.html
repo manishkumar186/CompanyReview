@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-md-6 text-white mx-auto p-3 mb-5" style="box-shadow: 0px 10px 10px gray; background-color: white;">
+            <h5 class="text-center">User Login</h5>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="" class="text-dark">Username</label>
+                    <input type="text" placeholder="Enter username" class="form-control" required name="uname">
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="text-dark"> password</label>
+                    <input type="password" placeholder="Enter Password" class="form-control" required name="pwd">
+                </div>
+                <div>
+                    {% if error %}
+                    <i style="color: red;">{{error}}</i>
+
+                    {% endif %}
+                </div>
+
+                <input type="submit" class="btn btn-success" value="Sign In">
+                
+            </form>
+            <p style="text-align: right;"><a href="{% url 'account:register' %}"><i>Create Account</i></a></p>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
